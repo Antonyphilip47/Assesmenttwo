@@ -1,7 +1,5 @@
-SELECT  *
-FROM    catalog_product_entity
-WHERE   entity_id NOT IN
-        (
-        SELECT  product_id
-        FROM    sales_order_item
-        )
+SELECT cpe.entity_id AS product_id, cpe.sku, cpe.created_at AS product_created_at
+FROM catalog_product_entity AS cpe
+LEFT JOIN sales_order_item AS soi  ON cpe.entity_id = soi.product_id
+WHERE cpe.created_at < NOW() - INTERVAL 1 MONTH AND soi.order_id IS NULL;
+

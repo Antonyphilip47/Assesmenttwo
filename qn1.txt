@@ -1,3 +1,3 @@
-select so.increment_id ,soi.sku from sales_order as so
+select so.increment_id ,GROUP_CONCAT(soi.sku) from sales_order as so
 JOIN sales_order_item soi 
-ON soi.order_id = so.entity_id 
+ON soi.order_id = so.entity_id GROUP BY so.increment_id
